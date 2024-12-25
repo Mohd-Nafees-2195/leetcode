@@ -1,10 +1,14 @@
 class Solution {
     public int fib(int n) {
-        return fibb(n);
+        int[] dp=new int[n+1];
+        return fibb(n,dp);
     }
-    public int fibb(int n){
+    public int fibb(int n,int[] dp){
         if(n<=1)
          return n;
-        return fibb(n-1)+fibb(n-2);
+        if(dp[n]!=0)
+         return dp[n];
+        dp[n]=fibb(n-1,dp)+fibb(n-2,dp);
+        return dp[n];
     }
 }
