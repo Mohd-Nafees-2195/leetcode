@@ -7,10 +7,12 @@ class Solution {
         int ans=0;
         for(int i=1;i<=high;i++){
             dp.put(i,(dp.getOrDefault(i-one,0)+dp.getOrDefault(i-zero,0))%MOD);
+            if(i>=low&&i<=high)
+             ans=(ans+dp.get(i))%MOD;
         }
-        for(int i=low;i<=high;i++){
-            ans=(ans+dp.get(i))%MOD;
-        }
+        // for(int i=low;i<=high;i++){
+        //     ans=(ans+dp.get(i))%MOD;
+        // }
         return ans;
     }
 }
