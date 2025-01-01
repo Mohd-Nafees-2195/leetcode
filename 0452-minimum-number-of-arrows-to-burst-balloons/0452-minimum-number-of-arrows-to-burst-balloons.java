@@ -12,14 +12,13 @@ class Solution {
              return 0;
         });
         int ans=1;
-        int[] interval=points[0];
+        int commonEnd=points[0][1];
         for(int i=1;i<n;i++){
-            if(points[i][0]<=interval[1]){
-                interval[0]=Math.max(interval[0],points[i][0]);
-                interval[1]=Math.min(interval[1],points[i][1]);
+            if(points[i][0]<=commonEnd){
+                commonEnd=Math.min(commonEnd,points[i][1]);
             }else{
                 ans++;
-                interval=points[i];
+                commonEnd=points[i][1];
             }
         }
         return ans;
