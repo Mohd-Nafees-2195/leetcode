@@ -1,7 +1,7 @@
 class Solution {
     public int[] vowelStrings(String[] words, int[][] queries) {
-        int[] arr = new int[100001];
         int n = words.length;
+         int[] arr = new int[n+1];
         Set<Character> vowel = new HashSet<>();
         vowel.add('a');
         vowel.add('e');
