@@ -1,7 +1,7 @@
 class Solution {
     public int[] vowelStrings(String[] words, int[][] queries) {
         int n = words.length;
-         int[] arr = new int[n+1];
+        int[] arr = new int[n+1];
         Set<Character> vowel = new HashSet<>();
         vowel.add('a');
         vowel.add('e');
@@ -9,7 +9,7 @@ class Solution {
         vowel.add('o');
         vowel.add('u');
         for (int i = 0; i < n; i++) {
-            if (vowel.contains(words[i].charAt(0)) && vowel.contains(words[i].charAt(words[i].length() - 1))) {
+            if (isVowel(words[i].charAt(0),words[i].charAt(words[i].length() - 1))) {
                 arr[i] = 1;
             }
             if (i != 0) {
@@ -25,5 +25,11 @@ class Solution {
             }
         }
         return ans;
+    }
+    public boolean isVowel(char ch1,char ch2){
+        if((ch1=='a'||ch1=='e'||ch1=='i'||ch1=='o'||ch1=='u')&&(ch2=='a'||ch2=='e'||ch2=='i'||ch2=='o'||ch2=='u')){
+            return true;
+        }
+        return false;
     }
 }
