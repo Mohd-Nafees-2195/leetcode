@@ -24,10 +24,10 @@ class Solution {
             return true;
         if (p == null || q == null)
             return false;
-        if (!no)
-            return false;
+        // if (!no)
+        //     return false;
         if (p.val != q.val) {
-            no = false;
+            //no = false;
             return false;
         }
         return isSame(p.left, q.left, no) && isSame(p.right, q.right, no);
