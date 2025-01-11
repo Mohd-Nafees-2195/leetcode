@@ -6,10 +6,15 @@ class Solution {
         for(int i=0;i<s.length();i++){
             arr[s.charAt(i)-'a']++;
         }
-        int count=0;
+        int even=0,odd=0;
         for(int i=0;i<26;i++){
-            count+=arr[i]%k;
-        }
-        return count<=k;
+            if(arr[i]%2==0)
+             even++;
+            else
+             odd++;
+         }
+         if(odd>k)
+          return false;
+       return true;
     } 
 }
