@@ -21,17 +21,17 @@ class Solution {
         }
         while(!q.isEmpty()){
             Triplet t=q.poll();
+            level=Math.max(level,t.level);
             for(int i=0;i<4;i++){
                 int r=t.r+dx[i];
                 int c=t.c+dy[i];
                 if(r>=0&&r<n&&c>=0&&c<m){
                     if(!visited[r][c]){
-                        level=Math.max(level,t.level);
                         if(level-heightMap[r][c]>0){
                             ans+=level-heightMap[r][c];
-                            q.add(new Triplet(heightMap[r][c],r,c));
-                            visited[r][c]=true;
                         }
+                        q.add(new Triplet(heightMap[r][c],r,c));
+                        visited[r][c]=true;
                     }
                 }
             }
