@@ -1,6 +1,7 @@
 class Solution {
     public int maximumSum(int[] nums) {
         Arrays.sort(nums);
+        int ans=0;
         Map<Integer,Integer> map=new HashMap<>();
         for(int i=nums.length-1;i>=0;i--){
             int num=nums[i],sum=0;
@@ -9,11 +10,13 @@ class Solution {
                 num=num/10;
             }
             if(map.containsKey(sum)){
-                return nums[i]+map.get(sum);
+                ans=Math.max(ans,nums[i]+map.get(sum));
             }else{
                 map.put(sum,nums[i]);
             }
         }
-        return -1;
+        if(ans==0)
+         return -1;
+        return ans;
     }
 }
