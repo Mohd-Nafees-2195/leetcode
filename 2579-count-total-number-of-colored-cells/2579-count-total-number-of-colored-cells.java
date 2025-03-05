@@ -7,6 +7,6 @@ class Solution {
             sum+=4*(n-1);
             n--;
         }
-        return sum;
+        return sum+1;
     }
 }
