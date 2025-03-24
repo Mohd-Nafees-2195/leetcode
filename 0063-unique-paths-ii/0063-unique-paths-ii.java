@@ -3,6 +3,9 @@ class Solution {
         int m=obstacleGrid.length;
         int n=obstacleGrid[0].length;
         int[][] dp=new int[m][n];
+        for(int i=0;i<m;i++){
+            Arrays.fill(dp[i],-1);
+        }
         return getPath(obstacleGrid,m-1,n-1,dp);
     }
     public int getPath(int[][] obstacleGrid,int i,int j,int[][] dp){
@@ -12,8 +15,9 @@ class Solution {
          return 0;
         if(i==0&&j==0)
          return 1;
-        if(dp[i][j]!=0)
-         return dp[i][j];
-        return dp[i][j]=getPath(obstacleGrid,i-1,j,dp)+getPath(obstacleGrid,i,j-1,dp);
+        if(dp[i][j]==-1){
+            dp[i][j]=getPath(obstacleGrid,i-1,j,dp)+getPath(obstacleGrid,i,j-1,dp);
+        }
+        return dp[i][j];
     }
 }
