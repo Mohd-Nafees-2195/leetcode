@@ -1,10 +1,13 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        return path(n-1,m-1);
+        int[][] dp=new int[m][n];
+        return path(m-1,n-1,dp);
     }
-    public int path(int i,int j){
+    public int path(int i,int j,int[][] dp){
         if(i==0||j==0)
          return 1;
-        return path(i-1,j)+path(i,j-1);
+        if(dp[i][j]!=0)
+         return dp[i][j];
+        return dp[i][j]=path(i-1,j,dp)+path(i,j-1,dp);
     }
 }
