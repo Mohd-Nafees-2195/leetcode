@@ -1,19 +1,21 @@
 class Solution {
     int MOD=1000000007;
     public int numTilings(int n) {
-        int[] dp=new int[1001];
-        Arrays.fill(dp,-1);
-        dp[0]=1;
-        return getWays(n-1,dp);
-    }
-    public int getWays(int n,int[] dp){
-        if(n==0)
-         return 1;
-        dp[n]=getWays(n-1,dp);
-        int ans=0;
-        for(int i=0,j=n;i<=n;i++,j--){
-            ans+=(int)((long)dp[i]*dp[j])%MOD;
+
+        int MOD = 1000000007;
+        if (n == 0) return 1;
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+
+        long[] dp = new long[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+
+        for (int i = 3; i <= n; i++) {
+            dp[i] = (2 * dp[i - 1] % MOD + dp[i - 3]) % MOD;
         }
-        return ans;
+
+        return (int) dp[n];
     }
 }
