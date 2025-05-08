@@ -19,8 +19,9 @@ class Solution {
                     int x=dir[i][0]+arr[1];
                     int y=dir[i][1]+arr[2];
                     if(x>=0&&x<m&&y>=0&&y<n){
-                        int max=Math.max(arr[0],moveTime[x][y]-arr[0]);
-                        q.add(new int[]{max+1,x,y});
+                        int wait=Math.max(moveTime[x][y]-arr[0],0);
+                        int max=wait+arr[0]+1;
+                        q.add(new int[]{max,x,y});
                     }
                 }
             }
