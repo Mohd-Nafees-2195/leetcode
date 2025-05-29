@@ -1,4 +1,3 @@
-import java.util.*;
 
 public class Solution {
     public int[] maxTargetNodes(int[][] edges1, int[][] edges2) {
@@ -66,7 +65,7 @@ public class Solution {
         parity[node] = depth;
         for (int neighbor : graph.get(node)) {
             if (neighbor != parent) {
-                dfs(graph, neighbor, node, depth + 1, parity);
+                dfs(graph, neighbor, node, depth^1, parity);
             }
         }
     }
