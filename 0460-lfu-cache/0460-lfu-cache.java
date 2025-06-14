@@ -1,86 +1,62 @@
 class LFUCache {
-    int capacity;
-    Map<Integer,LFU> map;
-    LFU head,tail;
+    int capacity,minFreq;
+    Map<Integer,LFU> keyMap;
+    Map<Integer,List<LFU>> freqMap;
     public LFUCache(int capacity) {
         this.capacity=capacity;
-        this.map=new HashMap<>();
-        this.head=null;
-        this.tail=null;
+        this.minFreq=1;
+        this.keyMap=new HashMap<>();
+        this.freqMap=new HashMap<>();
     }
     
     public int get(int key) {
-        if(map.containsKey(key)){
-            update(key,map.get(key).value);
-            return map.get(key).value;
+        if(keyMap.containsKey(key)){
+            update(key,keyMap.get(key).value);
+            return keyMap.get(key).value;
         }
         return -1;
     }
     
     public void put(int key, int value) {
-        if(map.containsKey(key)) update(key,value);
-        else if(map.size()<capacity){
+        if(keyMap.containsKey(key)) update(key,value);
+        else if(keyMap.size()<capacity){
             add(key,value);
         }else{
-            map.remove(head.key);
-            head=head.next;
-            if(head!=null){
-                head.prev=null;
-            }else{
-                tail=null;
-            }
+            List<LFU> list=freqMap.get(minFreq);
+            LFU temp=list.get(0);
+            keyMap.remove(temp.key);
+            list.remove(temp);
             add(key,value);
         }
     }
     public void add(int key,int value){
         LFU lfu=new LFU(1,key,value);
-        if(head==null){
-            head=lfu;
-            tail=head;
+        minFreq=1;
+        keyMap.put(key,lfu);
+        if(freqMap.containsKey(1)){
+            freqMap.get(1).add(lfu);
         }else{
-            LFU temp=head;
-            while(temp!=null&&temp.useCnt==1){
-                temp=temp.next;
-            }
-            if(temp!=null){
-                if(temp==head){
-                    lfu.next=head;
-                    head.prev=lfu;
-                    head=lfu;
-                }else{
-                    LFU p=temp.prev;
-                    p.next=lfu;
-                    lfu.prev=p;
-                    lfu.next=temp;
-                    temp.prev=lfu;
-                }
-            }else{
-                tail.next=lfu;
-                lfu.prev=tail;
-                tail=tail.next;
-            }
+            List<LFU> list=new ArrayList<>();
+            list.add(lfu);
+            freqMap.put(1,list);
         }
-        map.put(key,lfu);
     }
     public void update(int key,int value){
-        LFU temp=map.get(key);
-        if(temp!=tail){
-            if(temp==head){
-                head=head.next;
-                head.prev=null;
-                temp.next=null;
-                tail.next=temp;
-                temp.prev=tail;
-                tail=temp;
-            }else{
-                LFU p=temp.prev,n=temp.next;
-                if(p!=null) p.next=n;
-                if(n!=null) n.prev=p;
-                temp.next=null;
-                tail.next=temp;
-                temp.prev=tail;
-                tail=temp;
-            }
+        LFU temp=keyMap.get(key);
+        freqMap.get(temp.useCnt).remove(temp);
+        // keyMap.remove(key);
+        if(freqMap.get(temp.useCnt).isEmpty()){
+            freqMap.remove(temp.useCnt);
+            if(!freqMap.containsKey(minFreq))
+             minFreq=temp.useCnt+1;
+        }
+
+        if(freqMap.containsKey(temp.useCnt+1)){
+            freqMap.get(temp.useCnt+1).add(temp);
+        }else{
+            List<LFU> list=new ArrayList<>();
+            list.add(temp);
+            freqMap.put(temp.useCnt+1,list);
         }
         temp.value=value;
         temp.useCnt=temp.useCnt+1;
